@@ -22,13 +22,24 @@ import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.concurrent.Callable;
 
+/**
+ * Implementation of {@link Callable} w/ void return type.
+ *
+ * @param <T>   dummy type
+ */
 @FunctionalInterface
 @SuppressWarnings({"unused", "RedundantThrows", "DefaultAnnotationParam"})
 public interface VoidCallable<T> extends Callable<@UnknownNullability T> {
 
+    /**
+     * @see #call()
+     */
     @Contract(pure = false)
     void call0() throws Exception;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nullable
     @Contract(value = "-> null", pure = false)

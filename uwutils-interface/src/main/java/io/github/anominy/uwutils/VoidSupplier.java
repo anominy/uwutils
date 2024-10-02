@@ -22,13 +22,24 @@ import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.function.Supplier;
 
+/**
+ * Implementation of {@link Supplier} w/ void return type.
+ *
+ * @param <T>   dummy type
+ */
 @FunctionalInterface
 @SuppressWarnings({"unused", "DefaultAnnotationParam"})
 public interface VoidSupplier<T> extends Supplier<@UnknownNullability T> {
 
+    /**
+     * @see #get()
+     */
     @Contract(pure = false)
     void get0();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nullable
     @Contract(value = "-> null", pure = false)
