@@ -24,10 +24,32 @@ import org.jetbrains.annotations.UnknownNullability;
 import java.util.Locale;
 import java.util.function.Supplier;
 
+/**
+ * A string utility class.
+ */
 @SuppressWarnings({"unused", "DefaultAnnotationParam"})
 public final class UwString {
+
+    /**
+     * An empty string instance.
+     */
     public static final String EMPTY = "";
 
+    /**
+     * Trim provided string by provided number of characters
+     * or return a default value on failure.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str           string to trim, may be null
+     * @param diff          number of characters to trim, may be null
+     * @param defaultValue  default value to return on failure, may be null
+     *
+     * @return  trimmed string
+     */
     @UnknownNullability
     @Contract(value = "null, _, _ -> param3; !null, null, _ -> param1; !null, _, _ -> !null", pure = true)
     public static String trimOrElse(
@@ -51,6 +73,23 @@ public final class UwString {
         return trimNoCheck(str, diff);
     }
 
+    /**
+     * Trim provided string by provided number of characters
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #trimOrNull(String, Integer)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str                   string to trim, may be null
+     * @param diff                  number of characters to trim, may be null
+     * @param defaultValueSupplier  supplier to get the default value from, may be null
+     *
+     * @return  trimmed string
+     */
     @UnknownNullability
     @Contract(value = "!null, null, _ -> param1; !null, _, _ -> !null", pure = false)
     public static String trimOrElse(
@@ -66,6 +105,23 @@ public final class UwString {
         return UwObject.ifNull(trimOrNull(str, diff), defaultValueSupplier);
     }
 
+    /**
+     * Trim provided string by provided number of characters
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #trimOrElse(String, Integer, Supplier)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str                   string to trim, may be null
+     * @param diff                  number of characters to trim, may be null
+     * @param defaultValueSupplier  supplier to get the default value from, may be null
+     *
+     * @return  trimmed string
+     */
     @UnknownNullability
     @Contract(value = "null, _, _ -> null; !null, null, _ -> param1; !null, _, _ -> !null", pure = false)
     public static String trimOrElse(
@@ -81,6 +137,23 @@ public final class UwString {
         return trimOrElse(str, diff, (Supplier<@UnknownNullability String>) defaultValueSupplier);
     }
 
+    /**
+     * Trim provided string by provided number of characters
+     * or return an empty string on failure.
+     *
+     * <p>Wraps {@link #trimOrElse(String, Integer, String)}
+     * w/ {@link #EMPTY} as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str   string to trim, may be null
+     * @param diff  number of characters to trim, may be null
+     *
+     * @return  trimmed string
+     */
     @NotNull
     @Contract(value = "!null, null -> param1", pure = true)
     public static String trimOrEmpty(
@@ -93,6 +166,23 @@ public final class UwString {
         return trimOrElse(str, diff, EMPTY);
     }
 
+    /**
+     * Trim provided string by provided number of characters
+     * or return unchanged string on failure.
+     *
+     * <p>Wraps {@link #trimOrElse(String, Integer, String)}
+     * w/ provided string as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str   string to trim, may be null
+     * @param diff  number of characters to trim, may be null
+     *
+     * @return  trimmed string or unchanged
+     */
     @UnknownNullability
     @Contract(value = "null, _ -> param1; !null, null -> param1; !null, _ -> !null", pure = true)
     public static String trimOrSelf(
@@ -105,6 +195,23 @@ public final class UwString {
         return trimOrElse(str, diff, str);
     }
 
+    /**
+     * Trim provided string by provided number of characters
+     * or return {@code null} on failure.
+     *
+     * <p>Wraps {@link #trimOrElse(String, Integer, String)}
+     * w/ {@code null} as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str   string to trim, may be null
+     * @param diff  number of characters to trim, may be null
+     *
+     * @return  trimmed string
+     */
     @UnknownNullability
     @Contract(value = "null, _ -> null; !null, null -> param1; !null, _ -> !null", pure = true)
     public static String trimOrNull(
@@ -117,6 +224,14 @@ public final class UwString {
         return trimOrElse(str, diff, (@Nullable String) null);
     }
 
+    /**
+     * Trim provided string by provided number of characters.
+     *
+     * @param str   string to trim, mustn't be null
+     * @param diff  number of characters to trim, mustn't be null
+     *
+     * @return  trimmed string
+     */
     @NotNull
     @Contract(pure = true)
     public static String trimNoCheck(
@@ -148,6 +263,25 @@ public final class UwString {
         return EMPTY;
     }
 
+    /**
+     * Convert string from one base to another
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #toBaseNoCheck(String, String, String)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     *     <li>Provided base is null.</li>
+     * </ul>
+     *
+     * @param str           string to convert, may be null
+     * @param base0         base the string represented in, may be null
+     * @param base1         base the string need to be converted in, may be null
+     * @param defaultValue  default value to return on failure, may be null
+     *
+     * @return  converted string or the default value
+     */
     @UnknownNullability
     @Contract(value = "null, _, _, _ -> param4; _, null, _, _ -> param4; _, _, null, _ -> param4; _, _, _, !null -> !null", pure = true)
     public static String toBaseOrElse(
@@ -172,6 +306,25 @@ public final class UwString {
         return toBaseNoCheck(str, base0, base1);
     }
 
+    /**
+     * Convert string from one base to another
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #toBaseOrNull(String, String, String)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     *     <li>Provided base is null.</li>
+     * </ul>
+     *
+     * @param str                   string to convert, may be null
+     * @param base0                 base the string represented in, may be null
+     * @param base1                 base the string need to be converted in, may be null
+     * @param defaultValueSupplier  supplier to get the default value from, may be null
+     *
+     * @return  converted string or the default value
+     */
     @UnknownNullability
     @Contract(value = "!null, !null, !null, _ -> !null", pure = false)
     public static String toBaseOrElse(
@@ -190,6 +343,25 @@ public final class UwString {
         return UwObject.ifNull(toBaseOrNull(str, base0, base1), defaultValueSupplier);
     }
 
+    /**
+     * Convert string from one base to another
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #toBaseOrElse(String, String, String, Supplier)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     *     <li>Provided base is null.</li>
+     * </ul>
+     *
+     * @param str                   string to convert, may be null
+     * @param base0                 base the string represented in, may be null
+     * @param base1                 base the string need to be converted in, may be null
+     * @param defaultValueSupplier  supplier to get the default value from, may be null
+     *
+     * @return  converted string or the default value
+     */
     @UnknownNullability
     @Contract(value = "null, _, _, _ -> null; _, null, _, _ -> null; _, _, null, _ -> null; !null, !null, !null, _ -> !null", pure = false)
     public static String toBaseOrElse(
@@ -208,6 +380,25 @@ public final class UwString {
         return toBaseOrElse(str, base0, base1, (Supplier<@UnknownNullability String>) defaultValueSupplier);
     }
 
+    /**
+     * Convert string from one base to another
+     * or return an empty one on failure.
+     *
+     * <p>Wraps {@link #toBaseOrElse(String, String, String, String)}
+     * w/ {@link #EMPTY} as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     *     <li>Provided base is null.</li>
+     * </ul>
+     *
+     * @param str       string to convert, may be null
+     * @param base0     base the string represented in, may be null
+     * @param base1     base the string need to be converted in, may be null
+     *
+     * @return  converted string or the empty one
+     */
     @NotNull
     @Contract(pure = true)
     public static String toBaseOrEmpty(
@@ -223,6 +414,25 @@ public final class UwString {
         return toBaseOrElse(str, base0, base1, EMPTY);
     }
 
+    /**
+     * Convert string from one base to another
+     * or return unchanged on failure.
+     *
+     * <p>Wraps {@link #toBaseOrElse(String, String, String, String)}
+     * w/ provided string as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     *     <li>Provided base is null.</li>
+     * </ul>
+     *
+     * @param str       string to convert, may be null
+     * @param base0     base the string represented in, may be null
+     * @param base1     base the string need to be converted in, may be null
+     *
+     * @return  converted string or unchanged
+     */
     @UnknownNullability
     @Contract(value = "null, _, _ -> param1; _, null, _ -> param1; _, _, null -> param1; !null, _, _ -> !null", pure = true)
     public static String toBaseOrSelf(
@@ -238,6 +448,25 @@ public final class UwString {
         return toBaseOrElse(str, base0, base1, str);
     }
 
+    /**
+     * Convert string from one base to another
+     * or return {@code null} on failure.
+     *
+     * <p>Wraps {@link #toBaseOrElse(String, String, String, String)}
+     * w/ {@code null} as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     *     <li>Provided base is null.</li>
+     * </ul>
+     *
+     * @param str       string to convert, may be null
+     * @param base0     base the string represented in, may be null
+     * @param base1     base the string need to be converted in, may be null
+     *
+     * @return  converted string or {@code null}
+     */
     @UnknownNullability
     @Contract(value = "null, _, _ -> null; _, null, _ -> null; _, _, null -> null; !null, !null, !null -> !null", pure = true)
     public static String toBaseOrNull(
@@ -253,6 +482,17 @@ public final class UwString {
         return toBaseOrElse(str, base0, base1, (@Nullable String) null);
     }
 
+    /**
+     * Convert string from one base to another.
+     *
+     * @param str       string to convert, mustn't be null
+     * @param base0     base the string represented in, mustn't be null
+     * @param base1     base the string need to be converted in, mustn't be null
+     *
+     * @return  converted string
+     *
+     * @throws NullPointerException if provided string or bases are null
+     */
     @NotNull
     @Contract(value = "null, _, _ -> fail; !null, null, _ -> fail; !null, !null, null -> fail", pure = true)
     public static String toBaseNoCheck(
@@ -286,10 +526,25 @@ public final class UwString {
             sb.append(base1.charAt(idx % baseLength1));
         }
 
-
         return sb.toString();
     }
 
+    /**
+     * Capitalize provided string
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #capitalizeNoCheck(String)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str           string to capitalize, may be null
+     * @param defaultValue  default value to return on failure, may be null
+     *
+     * @return  capitalized string or the default value
+     */
     @UnknownNullability
     @Contract(value = "null, _ -> param2; !null, _ -> !null", pure = true)
     public static String capitalizeOrElse(
@@ -306,6 +561,22 @@ public final class UwString {
         return capitalizeNoCheck(str);
     }
 
+    /**
+     * Capitalize provided string
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #capitalizeOrNull(String)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str                   string to capitalize, may be null
+     * @param defaultValueSupplier  supplier to get the default value from, may be null
+     *
+     * @return  capitalized string or the default value
+     */
     @UnknownNullability
     @Contract(value = "!null, _ -> !null", pure = false)
     public static String capitalizeOrElse(
@@ -318,6 +589,22 @@ public final class UwString {
         return UwObject.ifNull(capitalizeOrNull(str), defaultValueSupplier);
     }
 
+    /**
+     * Capitalize provided string
+     * or return a default value on failure.
+     *
+     * <p>Wraps {@link #capitalizeOrElse(String, Supplier)}.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str                   string to capitalize, may be null
+     * @param defaultValueSupplier  supplier to get the default value from, may be null
+     *
+     * @return  capitalized string or the default value
+     */
     @UnknownNullability
     @Contract(value = "null, _ -> null; !null, _ -> !null", pure = false)
     public static String capitalizeOrElse(
@@ -330,6 +617,22 @@ public final class UwString {
         return capitalizeOrElse(str, (Supplier<@UnknownNullability String>) defaultValueSupplier);
     }
 
+    /**
+     * Capitalize provided string
+     * or return an empty one on failure.
+     *
+     * <p>Wraps {@link #capitalizeOrElse(String, String)}
+     * w/ {@link #EMPTY} as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str   string to capitalize, may be null
+     *
+     * @return  capitalized string or the empty one
+     */
     @NotNull
     @Contract(pure = true)
     public static String capitalizeOrEmpty(
@@ -339,6 +642,22 @@ public final class UwString {
         return capitalizeOrElse(str, EMPTY);
     }
 
+    /**
+     * Capitalize provided string
+     * or return unchanged on failure.
+     *
+     * <p>Wraps {@link #capitalizeOrElse(String, String)}
+     * w/ provided string as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str   string to capitalize, may be null
+     *
+     * @return  capitalized string or unchanged
+     */
     @UnknownNullability
     @Contract(value = "null -> param1; !null -> !null", pure = true)
     public static String capitalizeOrSelf(
@@ -348,6 +667,22 @@ public final class UwString {
         return capitalizeOrElse(str, str);
     }
 
+    /**
+     * Capitalize provided string
+     * or return {@code null} on failure.
+     *
+     * <p>Wraps {@link #capitalizeOrElse(String, String)}
+     * w/ {@code null} as the default value.
+     *
+     * <p>Possible failure cases:
+     * <ul>
+     *     <li>Provided string is null.</li>
+     * </ul>
+     *
+     * @param str   string to capitalize, may be null
+     *
+     * @return  capitalized string or {@code null}
+     */
     @UnknownNullability
     @Contract(value = "null -> null; !null -> !null", pure = true)
     public static String capitalizeOrNull(
@@ -357,6 +692,15 @@ public final class UwString {
         return capitalizeOrElse(str, (@Nullable String) null);
     }
 
+    /**
+     * Capitalize provided string.
+     *
+     * @param str   string to capitalize, mustn't be null
+     *
+     * @return  capitalized string
+     *
+     * @throws NullPointerException if provided string is {@code null}
+     */
     @NotNull
     @Contract(value = "null -> fail", pure = true)
     public static String capitalizeNoCheck(
