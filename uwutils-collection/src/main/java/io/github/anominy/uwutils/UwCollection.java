@@ -21,13 +21,29 @@ import org.jetbrains.annotations.*;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * A collection utility class.
+ */
 @SuppressWarnings({"unused", "DefaultAnnotationParam"})
 public final class UwCollection {
 
+    /**
+     * An empty collection instance.
+     */
     @NotNull
     @SuppressWarnings("rawtypes")
     public static final Collection EMPTY = Collections.EMPTY_LIST;
 
+    /**
+     * Check if provided collection is unmodifiable.
+     *
+     * <p>Wraps {@link #isUnmodifiableNoCheck(Collection)}.
+     *
+     * @param collection    collection to check for, may be null
+     *
+     * @return  {@code true} if is unmodifiable
+     *          and {@code false} if not
+     */
     @Contract(value = "null -> false", pure = false)
     public static boolean isUnmodifiable(
             @Nullable
@@ -39,7 +55,16 @@ public final class UwCollection {
 
         return isUnmodifiableNoCheck(collection);
     }
-
+    /**
+     * Check if provided collection is unmodifiable.
+     *
+     * @param collection    collection to check for, mustn't be null
+     *
+     * @return  {@code true} if is unmodifiable
+     *          and {@code false} if not
+     *
+     * @throws NullPointerException if provided collection is {@code null}
+     */
     @Contract(value = "null -> fail", pure = false)
     @SuppressWarnings("unchecked")
     public static boolean isUnmodifiableNoCheck(
@@ -56,6 +81,17 @@ public final class UwCollection {
         return true;
     }
 
+    /**
+     * Create unmodifiable view of provided collection.
+     *
+     * <p>Wraps {@link #toUnmodifiableNoCheck(Collection)}.
+     *
+     * @param collection    collection to create unmodifiable view for, may be null
+     *
+     * @return  new unmodifiable {@link Collection} instance or {@code null}
+     *
+     * @param <T>   element type
+     */
     @UnknownNullability
     @UnmodifiableView
     @Contract(value = "null -> null; !null -> !null", pure = false)
@@ -70,6 +106,19 @@ public final class UwCollection {
         return toUnmodifiableNoCheck(collection);
     }
 
+    /**
+     * Create unmodifiable view of provided collection.
+     *
+     * <p>Wraps {@link Collections#unmodifiableCollection(Collection)}.
+     *
+     * @param collection    collection to create unmodifiable view for, mustn't be null
+     *
+     * @return  new unmodifiable {@link Collection} instance
+     *
+     * @throws NullPointerException if provided collection is {@code null}
+     *
+     * @param <T>   element type
+     */
     @NotNull
     @UnmodifiableView
     @Contract(value = "null -> fail", pure = false)
