@@ -12,7 +12,7 @@
     <artifactId>uwutils-set</artifactId>
     <version>0.3-r0</version>
 
-    <description>Set module of webring/uwutils library</description>
+    <description>Set module of anominy/uwutils library</description>
 
     <dependencies>
         <dependency>

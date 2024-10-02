@@ -12,7 +12,7 @@
     <artifactId>uwutils-interface</artifactId>
     <version>0.3-r0</version>
 
-    <description>Interface module of webring/uwutils library</description>
+    <description>Interface module of anominy/uwutils library</description>
 
     <dependencies>
         <dependency>
