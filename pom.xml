@@ -6,7 +6,7 @@
 
     <groupId>io.github.anominy</groupId>
     <artifactId>uwutils</artifactId>
-    <version>0.3-r0</version>
+    <version>0.3-r1</version>
 
     <packaging>pom</packaging>
 
@@ -66,14 +66,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <uwutils-object.version>0.3-r0</uwutils-object.version>
-        <uwutils-interface.version>0.3-r0</uwutils-interface.version>
-        <uwutils-collection.version>0.3-r0</uwutils-collection.version>
-        <uwutils-list.version>0.3-r0</uwutils-list.version>
-        <uwutils-set.version>0.3-r0</uwutils-set.version>
-        <uwutils-map.version>0.3-r0</uwutils-map.version>
-        <uwutils-array.version>0.3-r0</uwutils-array.version>
-        <uwutils-string.version>0.3-r0</uwutils-string.version>
+        <uwutils-object.version>0.3-r1</uwutils-object.version>
+        <uwutils-interface.version>0.3-r1</uwutils-interface.version>
+        <uwutils-collection.version>0.3-r1</uwutils-collection.version>
+        <uwutils-list.version>0.3-r1</uwutils-list.version>
+        <uwutils-set.version>0.3-r1</uwutils-set.version>
+        <uwutils-map.version>0.3-r1</uwutils-map.version>
+        <uwutils-array.version>0.3-r1</uwutils-array.version>
+        <uwutils-string.version>0.3-r1</uwutils-string.version>
         <jetbrains-annotations.version>24.1.0</jetbrains-annotations.version>
 
         <!-- Maven Plugin Versions -->
