@@ -81,7 +81,6 @@
         <maven.source.version>3.2.1</maven.source.version>
         <maven.javadoc.version>3.4.1</maven.javadoc.version>
         <maven.gpg.version>3.0.1</maven.gpg.version>
-        <maven.staging.version>1.6.13</maven.staging.version>
         <maven.central.version>0.6.0</maven.central.version>
     </properties>
 
